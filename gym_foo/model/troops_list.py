@@ -17,6 +17,7 @@ class TroopsList:
         return False
 
     def add_troops(self, new_troops: Troops, hive):
+        '''
         is_found = False
         for troops in self._troops_list:
             if troops.get_hive_id() == new_troops.get_hive_id():
@@ -24,7 +25,8 @@ class TroopsList:
                 hive.decr_march_num()
                 is_found = True
         if not is_found:
-            self._troops_list.append(new_troops)
+        '''
+        self._troops_list.append(new_troops)
 
     def remove_troops(self, hive_id):
         troops_list = []
