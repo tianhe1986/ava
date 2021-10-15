@@ -205,6 +205,13 @@ class Hive():
         if march is None:
             raise Exception('Troops not found, cannot recall')
         return march
+    
+    def other_hive_recall_suddenly(self, hive):
+        for troops in self._rein_troops.get_troops_list():
+            if troops.get_hive_id() == hive.get_id():
+                hive.recall_suddenly(troops.get_troops_num())
+                continue
+        self._rein_troops.remove_troops(hive_id=hive.get_id())
 
     def recall_suddenly(self, troops_num):
         self._using_march_num -= 1

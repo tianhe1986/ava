@@ -179,6 +179,10 @@ class AvaEnv(gym.Env):
         # 召回占领
         for tower in self.tower:
             tower.kick_march(hive=self.get_hive_dict()[hive_id])
+        # 召回入驻其他城市的守军
+        for hives in self.hives:
+            for process_hive in hives:
+                process_hive.other_hive_recall_suddenly(hive)
         # 召回集结
         rallies = []
         for rally in self.rally:
@@ -381,7 +385,7 @@ class AvaEnv(gym.Env):
                     lose_marches, report = battle.attack_hive(hive, march, self.get_hive_dict())
                     self.battle_reports.append(report)
                     self.logs.write('Battle in hive %s, march: %s, report: %s\n' % (target_id, march, report))
-                    if not report.is_attack_win():
+                    if report.is_attack_win(): # battle的结果是将hive作为进攻方处理的，所以这里是守城堡的一方获胜
                         new_march_list.extend(lose_marches)
                     else:
                         # 直接回家
